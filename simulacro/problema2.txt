@@ -1,0 +1,19 @@
+# Soluciones al problema 2
+
+## Apartado 1
+db.listingsAndReviews.aggregate([{$project: {count: { $size: "$amenities" }}},{$sort: { count: -1 }},{$limit: 1}])
+
+
+## Apartado 2
+db.listingsAndReviews.aggregate([{$project: {count: { $size: "$amenities" }}},{$sort: { count: -1 }},{$limit: 1}])
+
+
+## Apartado 3
+db.listingAndReviews.aggregate([{$group: {_id: "$property_type",count: { $sum: 1 }}}])
+
+
+## Apartado 4
+db.listingsAndReviews.find({$or:[{"beds":{$eq: 2}}, {"beds":{$eq: 3}}, {"beds":{$eq: 4}}, {"beds":{$eq: 5}}]}).count()
+
+
+

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class>
+    <name>L.1.1.1</name>
+        <student id="035">
+        <name>Mark</name>
+        <year>1999</year>
+    </student>
+    <student id="007">
+        <name>Ana</name>
+        <year>1998</year>
+    </student>
+</class>
+
+¿La información de toda la clase?
+• //class
+¿Todos los estudiantes?
+• //student
+¿Todos los nombres de los estudiantes?
+•//student/name
+¿Todas las idsde los estudiantes?
+•//student/@id
+
+¿El segundo estudiante?
+•//student[2]
+¿Estudiante con id 035?
+•//student[@id=035]
+¿Estudiantes del año 1999 o posteriores?
+•//student[year >= 1999]
+¿Todos los elementos student que tengan al menos un atributo?
+•//student[@*]
+
+¿Cuántos estudiantes hay?
+•count(//student)
+¿Nombre de los estudiantes que han nacido en 1999?
+•//student[year = 1999]/name
+¿Año de nacimiento de Ana?
+•//student[name = 'Ana']/year
+//student/name[contains(text(),'Ana')]/.year/text()
+¿Último estudiante?
+•(//student)[last()]
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<bookstore>
+  <book category="cooking">
+    <title lang="en">Everyday Italian</title>
+    <author>Giada De Laurentiis</author>
+    <year>2005</year>
+    <price>30.00</price>
+  </book>
+  <book category="children">
+    <title lang="en">Harry Potter</title>
+    <author>J K. Rowling</author>
+    <year>2005</year>
+    <price>29.99</price>
+  </book>
+  <book category="web">
+    <title lang="en">Learning XML</title>
+    <author>Erik T. Ray</author>
+    <year>2003</year>
+    <price>39.95</price>
+  </book>
+</bookstore>
+
+
+Todos los títulos de libro:
+•//book/title
+Todos los títulos, aparezcan dónde aparezcan:
+•//title
+Titulo de los libros con un precio mayor que 35:
+•//book[price>35]/title
+/bookstore/book[price>35]/title
+Todos los títulos con un atributo “lang” con valor ‘en’:
+•//book/title[@lang = 'en']
+//title[@lang = 'en']
+Todos los elementos título con al menos un atributo:
+•//title[@*]
+
+
+<?xmlversion="1.0" encoding="utf-8"?>
+<Wikimedia>
+    <projects>
+        <project name="Wikipedia" launch="2001-01-05">
+            <editions>
+                <edition language="English">en.wikipedia.org</edition>
+                <edition language="German">de.wikipedia.org</edition>
+                <edition language="French">fr.wikipedia.org</edition>
+                <edition language="Polish">pl.wikipedia.org</edition>
+                <edition language="Spanish">es.wikipedia.org</edition>
+            </editions>
+        </project>
+        <project name="Wiktionary" launch="2002-12-12">
+            <editions>
+                <edition language="English">en.wiktionary.org</edition>
+                <edition language="French">fr.wiktionary.org</edition>
+                <edition language="Vietnamese">vi.wiktionary.org</edition>
+                <edition language="Turkish">tr.wiktionary.org</edition>
+                <edition language="Spanish">es.wiktionary.org</edition>
+            </editions>
+        </project>
+    </projects>
+</Wikimedia>
+
+Los nombres de todos los proyectos
+•//project/@name
+Solo las URL de todos los proyectos en español
+•//edition[@language = 'Spanish']
+//project[editions/edition[@language='Spanish']]/editions/edition[@language='Spanish']/text()
+Todas las ediciones de todos los proyectos
+•//edition
+Sólo las URL de todas las Wikipedias
+•//project[@name='Wikipedia']/editions/edition
+//edition[contains(., '.wikipedia.org')]/text()
+La cuarta edición del Wiktionary
+•//project[@name='Wiktionary']/editions/edition[4]
+(//edition[text()='Wiktionary'])[4]

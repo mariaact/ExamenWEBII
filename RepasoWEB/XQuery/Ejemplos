@@ -1,0 +1,36 @@
+Es lo mismo:
+doc("xquery_ejemplo1.xml")/bookstore/book[price<30]
+
+for $x in doc("xquery_ejemplo1.xml")/bookstore/book
+where $x/price>30
+return $x/title
+
+Podemos ordenar el resultado (archivo xquery_ejemplo1a.xq):
+for$x in doc("xquery_ejemplo1.xml")/bookstore/book
+where$x/price>30
+orderby$x/title
+return$x/title
+
+Podemos incluir texto / XML / HTML (archivo xquery_ejemplo1b.xq):
+<ul>
+{
+for$x in doc("xquery_ejemplo1.xml")/bookstore/book/title
+orderby$x
+return<li>{data($x)}</li>
+}
+</ul>
+
+Podemos ordenar el resultado (archivo xquery_ejemplo1a.xq):
+for$x in doc("xquery_ejemplo1.xml")/bookstore/book
+where$x/price>30
+orderby$x/title
+return$x/title
+
+Podemos incluir texto / XML / HTML (archivo xquery_ejemplo1b.xq):
+<ul>
+{
+for$x in doc("xquery_ejemplo1.xml")/bookstore/book/title
+orderby$x
+return<li>{data($x)}</li>
+}
+</ul>

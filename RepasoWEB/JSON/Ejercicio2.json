@@ -1,0 +1,97 @@
+{
+    "squadName": "Super hero squad",
+    "homeTown": "Metro City",
+    "formed": 2016,
+    "secretBase": "Super tower",
+    "active": true,
+    "members": [
+        {
+            "name": "Molecule Man",
+            "age": 29,
+            "secretIdentity": "Dan Jukes",
+            "powers": [
+                "Radiation resistance",
+                "Turning tiny",
+                "Radiation blast"
+            ]
+        },
+        {
+            "name": "Madame Uppercut",
+            "age": 39,
+            "secretIdentity": "Jane Wilson",
+            "powers": [
+                "Million tonne punch",
+                "Damage resistance"
+            ]
+        }
+    ]
+}
+
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema#",
+    "$id": "http://example.com/schemas/painting.schema.json",
+    "type": "object",
+    "title": "Painting",
+    "description": "Painting information",
+    "required": [
+        "squadName",
+        "homeTown",
+        "formed",
+        "secretBase",
+        "active",
+        "members"
+    ],
+    "properties": {
+        "squadName": {
+            "type": "string",
+            "description": "Painting name"
+        },
+        "homeTown": {
+            "type": "string",
+            "maxLength": 50,
+            "description": "Name of the artist"
+        },
+        "formed": {
+            "type": "number",
+            "description": "Painting description"
+        },
+        "secretBase": {
+            "type": "string",
+            "description": "Painting name"
+        },
+        "active":{
+            "type": "boolean",
+            "description": "Painting name"
+        },
+        "members": {
+            "type": "array",
+            "title": "Painting dimension",
+            "description": "Describes the dimension of a painting in cm",
+            "required": [
+                "name",
+                "age", 
+                "secretIdentity", 
+                "powers"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Width of the product",
+                },
+                "age": {
+                    "type": "number",
+                    "description": "Height of the product",
+                    "minimum": 0
+                },
+                "secretIdentity": {
+                    "type": "string",
+                    "description": "Width of the product",
+                },
+                "powers": {
+                    "type": "array",     
+                    "description": "Height of the product",
+                }
+            }
+        } 
+    }
+}

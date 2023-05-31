@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="https://www.w3schools.com" xmlns="https://www.w3schools.com" elementFormDefault="qualified">
+        <xs:element name="items">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="item">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="name" type="xs:string"/>
+                                <xs:element name="photo" type="xs:string"/>
+                                <xs:element name="tags" type="xs:integer"/>
+                                <xs:element name="diameter" type="xs:integer"/>
+                                <xs:element name="wight" type="xs:integer"/>
+                                <xs:element name="price" type="xs:integer"/>
+                                <xs:element name="size">
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:enumeration value="Big"/>
+                                            <xs:enumeration value="Small"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+    </xs:schema>

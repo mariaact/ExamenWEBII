@@ -1,0 +1,44 @@
+<!--<breakfast_menu>
+<food>
+<name>French Toast</name>
+<name>French Toast</name>
+<pricecurrency="$">4.50</price>
+<description>Thickslicesmadefromourhomemadesourdoughbread</DESCRIPTION>
+<calories>600</calories>
+</food>
+<food>
+<pricecurrency>6.95</price>
+<description>Twoeggs, baconorsausage, toast, and ourever-popular hash browns
+<calories>950</calories>
+</food>
+<food></food>
+</breakfastMenu>
+<drinks_menu>
+<drink>
+<name>Coffe<name/>
+<price>1.5$</price>
+</drink></drinks_menu>-->
+
+<breakfast_menu>
+    <food>
+        <name>French Toast</name>
+        <name>French Toast</name>
+        <price currency="$">4.50</price>
+        <description>Thickslicesmadefromourhomemadesourdoughbread</description>
+        <calories>600</calories>    
+    </food>
+    <food>
+        <price currency="$">6.95</price>
+        <description>Twoeggs, baconorsausage, toast, and ourever-popular hash browns</description>
+        <calories>950</calories>
+    </food>
+    <food></food>
+    <drinks_menu>
+        <drink>
+            <name>Coffe</name>
+            <price>1.5$</price>
+        </drink>
+    </drinks_menu>
+</breakfast_menu>
+
+   

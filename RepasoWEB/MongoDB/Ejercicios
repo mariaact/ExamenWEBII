@@ -1,0 +1,98 @@
+En sample_training.zips¿Cuántas colecciones tienen menos de 1000 personas en el campo pop? (sol. 8065)
+db.zips.find({"pop":{$lt: 1000}}).count()
+
+En sample_training.trips¿Cuál es la diferencia entre la gente que nació en 1998 y la que nació después de 1998? (sol. 6)
+db.trips.find({"birth year":{$gt: 1998}}).count() - db.trips.find({"birth year":{$eq: 1998}}).count()
+
+En sample_training.routes¿Cuántas rutas tienen al menos una parada? (sol. 11)
+db.routes.find({"stops":{$gte: 1}}).count() 
+
+En sample_training.inspections¿Cuántos negocios tienen un resultado de inspección "OutofBusiness" y pertenecen al sector "Home ImprovementContractor-100"? (sol. 4)
+db.inspections.find({$and: [{"result":{ $eq:"Out of Business"}}, {"sector": {$eq: "Home Improvement Contractor - 100"}}]}).count()
+
+En sample_training.inspections¿Cuántos documentos hay con fecha de inspección "Feb 20 2015" o "Feb 21 2015"y cuyo sector no sea "CigaretteRetailDealer -127"? (sol. 204)
+db.inspections.find({$and:[{$or:[{date:"Feb 20 2015"},{date:"Feb 21 2015"}]},{sector:{$ne:"Cigarette Retail Dealer - 127"}}]}).count()
+
+En sample_training.companies, ¿cuántas empresas tienen más empleados que el año en el que se fundaron? (sol. 324)
+db.companies.find({$expr:{$gt: [ "$number_of_employees", "$founded_year"] }}).count()
+
+
+En sample_training.companies, ¿en cuántas empresas coinciden su permalinkcon su twitter_username? (sol. 1299)
+db.companies.find({$expr:{$eq: [ "$permalink", "$twitter_username"] }}).count()
+
+
+En sample_airbnb.listingsAndReviews, ¿cuál es el nombre del alojamiento en el que pueden estar más de 6 personas alojadas y tiene exactamente 50 reviews? (sol. SunsetBeach LodgeRetreat)
+db.listingsAndReviews.find({$and:[{"number_of_reviews":{$eq: 50}}, {"accommodates":{$gt:6}}]}, {name:1, _id:0})
+
+En sample_airbnb.listingsAndReviews,¿cuántos documentos tienen el "property_type""House"e incluyen "Changingtable"como una de las "amenities"? (sol. 11)
+db.listingsAndReviews.find({$and:[{"property_type":{$eq: "House"}}, {"amenities":{$eq:"Changing table"}}]}).count()
+db.listingsAndReviews.find({property_type:"House",amenities:"Changing table"}).count()
+
+
+Ensample_training.companies, ¿Cuántas empresas tienen oficinas en Seattle? (sol. 117)
+db.companies.find({offices:{$elemMatch:{city:"Seattle"}}}).count()
+
+Ensample_training.companies, haga una query que devuelva únicamente el nombre de las empresas que tengan exactamente 8 "funding_rounds"
+db.companies.find({"funding_rounds":{$size:8}}, {name:1, _id:0})
+
+En sample_training.trips, ¿cuántos viajes empiezan en estaciones que están al oeste de la longitud -74? (sol. 1928)
+Nota 1: Hacia el oeste la longitud decrece
+Nota 2: el formato es <field_name>: [ <longitud>, <latitud> ]
+db.trips.find({'start station location.coordinates.0':{$lt:-74}}).count()
+
+
+En sample_training.inspections, ¿cuántas inspecciones se llevaron a cabo en la ciudad de "NEW YORK"? (sol. 18279)
+db.inspections.find({"address.city":"NEW YORK"}).count()
+
+En sample_airbnb.listingsAndReviews, haga una query que devuelva el nombre y la dirección de los alojamientos que tengan "Internet"como primer elemento de "amenities"
+db.listingsAndReviews.find({"amenities.0":"Internet"},{name:1,address:1,_id:0})
+
+En sample_airbnb.listingsAndReviews, ¿qué "roomtypes" existen?
+db.listingsAndReviews.aggregate([{"$group": {_id:"$room_type"}}])
+
+En sample_training.companies, haga una queryque devuelva el nombre y el año en el que se fundaron las 5 compañías más antiguas.
+db.companies.find({"founded_year":{$ne: ""}}, {"founded_year": 1, "name":1}).sort({"founded_year": 1}).limit(5)
+db.companies.find({founded_year:{$ne: null}},{name:1, founded_year:1, _id:0}).sort({founded_year:1}).limit(5)
+
+
+En sample_training.trips, ¿en qué año nació el ciclista más joven? (sol. 1999)
+db.trips.find({"birth year":{$ne: ""}}, {"birth year": 1}).sort({"birth year": -1}).limit(1)
+
+Simulacro: 
+
+En la colección listingAndReviews indique el/los nombre(s) del alojamiento con más reviews.
+db.listingsAndReviews.find(
+  { "number_of_reviews": { $ne: "" } },
+  { "name": 1,  "number_of_reviews": 0,"_id": 0 }
+).sort({ "number_of_reviews": -1 }).limit(1)
+
+En la colección listingAndReviews indique el/los nombre(s) del alojamiento con más amenities.
+db.listingsAndReviews.aggregate([{$project: {count: { $size: "$amenities" }}},{$sort: { count: -1 }},{$limit: 1}])
+//otra manera
+db.listingAndReviews.aggregate([
+    {
+      $project: {
+        name: 1,
+        amenityCount: { $size: "$amenities" }
+      }
+    },
+    {
+      $sort: { amenityCount: -1 }
+    },
+    {
+      $limit: 1
+    }
+  ])
+
+
+En la colección listingAndReviews indique el/los nombre(s) del alojamiento con más amenities.
+db.listingsAndReviews.aggregate([{$project: {count: { $size: "$amenities" }}},{$sort: { count: -1 }},{$limit: 1}])
+
+En la colección listingAndReviews indique para cada tipo de property_type el número de alojamientos de ese tipo.
+db.listingAndReviews.aggregate([{$group: {_id: "$property_type",count: { $sum: 1 }}}])
+
+
+En la colección listingAndReviews indique el número de alojamientos que tienen 2, 3, 4 o 5 beds.
+db.listingsAndReviews.find({$or:[{"beds":{$eq: 2}}, {"beds":{$eq: 3}}, {"beds":{$eq: 4}}, {"beds":{$eq: 5}}]}).count()
+
+
